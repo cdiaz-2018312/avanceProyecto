@@ -5,14 +5,11 @@ const CategoriaSchema= Schema({
         type: String,
         required: [true, 'nombre Obligatorio']
     },
-    descripcion:{
-        type: String,
-        required: [true,'descrip obligatoria']
-    },
+ 
     estado:{
         type:Boolean,
         default: true
     }
 });
 
-module.exports = model('Categoria', CategoriaSchema);
+module.exports = model('Categoria', CategoriaSchema); 

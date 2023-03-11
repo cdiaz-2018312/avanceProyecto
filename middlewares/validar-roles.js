@@ -1,6 +1,7 @@
 const { request, response } = require('express');
 
 
+
 //Operador rest u operador spread 
 const tieneRole = ( ...roles ) => {
 
@@ -8,13 +9,13 @@ const tieneRole = ( ...roles ) => {
 
         if (!req.usuario) {
             return res.status(500).json({
-                msg: 'Se quiere verificar el role sin validar el token primero'
+                msg: 'Porfavor, validar primero token'
             })
         }
 
         if (!roles.includes( req.usuario.rol)) {
             return res.status(401).json({
-                msg: `El servicio requiere uno de estos roles: ${ roles }`
+                msg: `Usted necesita uno de estos roles: ${ roles }`
             })
 
         }

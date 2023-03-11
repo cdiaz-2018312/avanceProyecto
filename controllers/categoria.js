@@ -2,6 +2,8 @@
 const {response, request} = require('express'); 
 //importacion de categoria(modelo)
 const Categoria = require ('../models/categoria.js');
+const producto = require('../models/producto');
+const Producto = require ('../models/producto');
 
 const getCategoria = async(req = request, res = response)=>{
     //condición del get
@@ -48,11 +50,21 @@ const getCategoria = async(req = request, res = response)=>{
     const deleteCategoria = async (req= request, res= response) =>{
         const {id}=req.params;
 
-        const categoriaEliminada = await Categoria.findByIdAndUpdate(id, {estado: false})
+
+        const productosPordefecto = await Producto.find ({Producto: Producto.categoria})
+        
+        const categoriaDefecto = '640a68cc4faf65a0a9725eb9';
+        for (let producto of productosPordefecto){
+            producto.categoria = categoriaDefecto;
+            await producto.save();
+        }
+
+        const categoriaEliminada = await Categoria.findByIdAndDelete(id)
 
         res.json({
             msg: 'Delete cambiar de estado categoria (false)',
-            categoriaEliminada
+            categoriaEliminada,
+            producto
         });
 
     }

@@ -12,6 +12,7 @@ class Server {
         this.usuarioPath='/api/usuario';
         this.authPath='/api/auth';
         this.facturaPath ='/api/factura';
+        this.carritoPath = '/api/carrito';
         //conectar db
         this.conectarDB();
 
@@ -43,6 +44,7 @@ class Server {
         this.app.use(this.authPath, require('../routes/auth'));
         this.app.use(this.usuarioPath, require('../routes/usuario'));
         this.app.use(this.facturaPath,require('../routes/factura'));
+        this.app.use(this.carritoPath,require('../routes/carrito'));
     }
     listen(){
         this.app.listen( this.port, () => {

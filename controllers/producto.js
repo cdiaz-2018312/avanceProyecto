@@ -1,11 +1,26 @@
 //importacion de express
 const {response, request} = require('express'); 
 //importacion de Producto(modelo)
-const Producto = require ('../models/producto.js');
+const Producto = require ('../models/producto');
+
+const getProductoMasVendidosyAgotados = async(req = request, res = response)=>{
+    //condición del get
+    const query = {estado:false};
+
+    const listaProducto = await Promise.all([
+        Producto.countDocuments(query),
+        Producto.find(query)
+    ]);
+
+    res.json ({
+            msg: 'get Api - controlador Producto',
+            listaProducto
+        });   
+    }
 
 const getProducto = async(req = request, res = response)=>{
     //condición del get
-    const query = {estado:true};
+    const query = { estado:true } ;
 
     const listaProducto = await Promise.all([
         Producto.countDocuments(query),
@@ -20,9 +35,9 @@ const getProducto = async(req = request, res = response)=>{
 
     const postProducto = async (req= request, res = response)=>{
         //desestructuración
-        const { nombre, descripcion, precio, stock } = req.body;
+        const { nombre,  precio, stock,categoria } = req.body;
 
-        const productoGuardado = new Producto ({nombre, descripcion, precio, stock});
+        const productoGuardado = new Producto ({nombre,  precio, stock , categoria});
         //guardar en la bd
         await productoGuardado.save();
 
@@ -58,6 +73,7 @@ const getProducto = async(req = request, res = response)=>{
     }
 
     module.exports = {
+        getProductoMasVendidosyAgotados,
         getProducto,
         postProducto,
         putProducto,

@@ -5,15 +5,21 @@ const Usuario = require('../models/usuario');
 
 const validarJWT = async( req = request, res= response, next ) => {
 
-    const token = req.header('x-token');
 
+    const token = req.header('x-token');
+    if (!req.header('x-token')) {
+       return res.status(401).json ({
+            msg: 'asegurese de que x-token este bien escrito en el header',
+            
+        }); 
+    }
     //Si no viene el token
     if ( !token ) {
         return res.status(401).json({
             msg: 'No hay token en la petición'
         })
     }
-
+    
     
     try {
 
